@@ -9,13 +9,14 @@ URL: https://www.codechef.com/practice/course/basic-programming-concepts/DIFF500
 using namespace std;
 
 int main() {
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
-
 int n;
 cin >> n;
 
-cout << (n >= 6 && n <= 8 ? "Yes" : "No") << '\n';
+if (n >= 6 && n <= 8) {
+cout << "Yes";
+} else {
+cout << "No";
+}
 
 return 0;
 }
