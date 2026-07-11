@@ -4,7 +4,7 @@ This repository contains my CodeChef problem solutions in C++.
 
 ## Language
 - C++
-- Java
+- python
 
 ## Platform
 - CodeChef
