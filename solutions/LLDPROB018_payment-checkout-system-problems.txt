@@ -1,0 +1,35 @@
+/*
+Problem: Payment Checkout System - Problems
+Problem Code: LLDPROB018
+Platform: CodeChef
+URL: https://www.codechef.com/skill-test/DEVWEEKEND58/problems/LLDPROB018
+*/
+
+To add CryptoPayment in the current Strategy-based checkout design, we should not modify the existing
+ShoppingCart class. The ShoppingCart should already depend only on the PaymentStrategy abstraction, not on
+concrete payment types like Credit Card, UPI, Wallet, or Crypto.
+
+The exact architectural step is to create a new strategy class, for example CryptoPaymentStrategy, that
+implements the existing PaymentStrategy interface. This new class will contain only the crypto-specific
+payment logic, including the flat $5.00 network fee.
+
+For example, if the interface has a method such as calculateFee() or pay(), then CryptoPaymentStrategy will
+override that method and apply the crypto fee rule there. The existing CreditCardPayment, UPIPayment, and
+WalletPayment classes remain unchanged. The ShoppingCart also remains unchanged because it only calls the
+common strategy method through the PaymentStrategy reference.
+
+Only new code needs to be added:
+1. A new CryptoPaymentStrategy class.
+2. The crypto-specific $5.00 fee calculation inside that class.
+3. Optionally, a small registration or configuration change where the application maps the user’s “Crypto”
+selection to CryptoPaymentStrategy.
+
+This follows the Open/Closed Principle because the system is open for extension but closed for modification.
+We are extending the checkout engine by adding a new payment strategy, not editing the core checkout logic.
+
+If we had used inheritance or hardcoded if-else logic inside ShoppingCart, then adding CryptoPayment would
+require modifying ShoppingCart. That would make the core class fragile and harder to maintain. But with
+Strategy, the changing behaviour is isolated in separate payment classes.
+
+So, the ShoppingCart does not need to know how CryptoPayment works. It only delegates payment processing to
+the selected PaymentStrategy. This keeps the design flexible, scalable, and clean.
