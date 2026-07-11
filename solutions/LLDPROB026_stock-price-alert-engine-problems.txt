@@ -1,0 +1,39 @@
+/*
+Problem: Stock Price Alert Engine - Problems
+Problem Code: LLDPROB026
+Platform: CodeChef
+URL: https://www.codechef.com/skill-test/DEVWEEKEND58/problems/LLDPROB026
+*/
+
+To add the new WhatsApp alert channel, we do not need to modify the existing Stock class.
+
+The Stock class should only depend on the StockObserver interface, not on concrete notifier classes like
+EmailNotifier, SMSNotifier, PushNotifier, or WhatsAppNotifier. Its responsibility is only to maintain a list
+of observers and call update() on them whenever the stock price crosses the threshold.
+
+The exact architectural step is to create a new class called WhatsAppNotifier that implements the existing
+StockObserver interface. This class will contain only the WhatsApp-specific notification logic inside its
+update() method.
+
+After that, we update the NotificationFactory by adding a new ChannelType value such as WHATSAPP and
+returning a new WhatsAppNotifier when this type is requested.
+
+The Stock class remains untouched because it already works with the abstraction StockObserver. It does not
+care whether the observer is Email, SMS, Push, or WhatsApp. It simply broadcasts the event by calling
+update().
+
+Only new or factory-related code needs to be added:
+1. Add WHATSAPP in ChannelType enum.
+2. Create WhatsAppNotifier implements StockObserver.
+3. Add one case in NotificationFactory to return WhatsAppNotifier.
+4. Register the new WhatsApp observer with the Stock object.
+
+This follows the Open/Closed Principle because the system is open for extension but closed for modification.
+We extend the system by adding a new notifier class, without changing the core Stock engine.
+
+If we had written if-else logic inside Stock for every channel, then adding WhatsApp would require modifying
+Stock. That would make the engine fragile and tightly coupled. But with Observer and Factory patterns, the
+Stock class remains clean, reusable, and stable.
+
+In short, WhatsApp support is added by creating a new observer and updating the factory, not by touching the
+central Stock class.
