@@ -1,0 +1,33 @@
+/*
+Problem: Payment Checkout System - Problems
+Problem Code: LLDPROB017
+Platform: CodeChef
+URL: https://www.codechef.com/skill-test/DEVWEEKEND58/problems/LLDPROB017
+*/
+
+I disagree with the inheritance-based design where CreditCardCart, UPICart, and WalletCart are created as
+subclasses of ShoppingCart.
+
+The fundamental flaw is that the payment method is not a type of ShoppingCart. A shopping cart should only
+represent cart-related responsibilities such as storing items, calculating subtotal, and starting checkout.
+Payment processing and fee calculation are separate behaviours that may change independently. If we put
+payment-specific logic inside subclasses of ShoppingCart, the cart becomes tightly coupled with payment
+rules.
+
+This inheritance-based approach also reduces runtime flexibility. For example, if a user selects Credit Card
+first and then switches to UPI at checkout, we should not need to create a different cart object. The
+payment method should be changeable at runtime. Inheritance fixes the behaviour at class level, while the
+Strategy pattern allows us to plug in or replace the payment algorithm dynamically.
+
+Using the Strategy pattern, we can define a common interface such as PaymentStrategy with a method like
+checkout() or calculateFee(). Then CreditCardPayment, UPIPayment, and WalletPayment can implement their own
+fee logic separately. The ShoppingCart can hold a reference to a PaymentStrategy and delegate payment
+processing to it.
+
+This follows Composition over Inheritance because the cart has a payment strategy instead of being a
+specific payment-type cart. It also follows the Open/Closed Principle: if a new payment method like
+NetBanking or Crypto is added later, we simply create a new strategy class without modifying the
+ShoppingCart class.
+
+So, Strategy is the better design because it keeps the checkout engine flexible, maintainable, testable, and
+scalable.
