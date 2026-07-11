@@ -1,0 +1,36 @@
+/*
+Problem: Logging Framework - Problems
+Problem Code: LLDPROB021
+Platform: CodeChef
+URL: https://www.codechef.com/skill-test/DEVWEEKEND58/problems/LLDPROB021
+*/
+
+Creating one fat LogHandler interface with methods like writeToConsole(), writeToFile(), and
+writeToDatabase() is a bad design choice.
+
+The main problem is that every logger class will be forced to implement methods it does not actually need.
+For example, a ConsoleLogger only knows how to write logs to the console. But if it implements this fat
+interface, it must also provide writeToFile() and writeToDatabase(), even though those behaviours are
+irrelevant for it.
+
+This creates unnecessary and fake implementations such as empty methods, dummy code, or methods that throw
+exceptions like UnsupportedOperationException. That makes the design harder to maintain and more error-prone
+because classes become dependent on responsibilities they do not use.
+
+This violates the Interface Segregation Principle, which says that a class should not be forced to depend on
+methods it does not use.
+
+A cleaner design is to create a small, focused interface with only one common behaviour:
+
+interface LogHandler {
+void log(String message);
+}
+
+Then each concrete logger can implement the same method in its own way. ConsoleLogger will print to the
+console, FileLogger will write to a file, and DatabaseLogger will save the message into the database.
+
+This keeps the interface simple, reusable, and flexible. It also allows the logging framework to treat all
+loggers polymorphically without knowing their internal destination.
+
+So instead of a fat interface with destination-specific methods, the better design is a single-method
+LogHandler interface that represents the common logging action.
