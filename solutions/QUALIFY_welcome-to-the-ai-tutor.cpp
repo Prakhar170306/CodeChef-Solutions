@@ -1,0 +1,26 @@
+/*
+Problem: Welcome to the  AI Tutor
+Problem Code: QUALIFY
+Platform: CodeChef
+URL: https://www.codechef.com/practice/course/logical-problems/DIFF800/problems/QUALIFY
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+int T;
+cin >> T;
+
+while (T--) {
+int X, A, B;
+cin >> X >> A >> B;
+
+if (A + 2 * B >= X)
+cout << "Qualify" << endl;
+else
+cout << "NotQualify" << endl;
+}
+
+return 0;
+}
