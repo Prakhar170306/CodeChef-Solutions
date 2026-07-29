@@ -1,0 +1,42 @@
+/*
+Problem: CodeChef Solution
+Problem Code: VALLFLAT
+Platform: CodeChef
+URL: https://www.codechef.com/START249D/problems/VALLFLAT
+*/
+
+ios::sync_with_stdio(false);
+cin.tie(nullptr);
+
+int T;
+cin >> T;
+
+while (T--) {
+int n;
+cin >> n;
+
+vector<long long> a(n);
+for (auto &x : a) cin >> x;
+
+int pos = min_element(a.begin(), a.end()) - a.begin();
+long long mn = a[pos];
+
+long long ans;
+
+if (pos != 0 && pos != n - 1) {
+ans = 1LL * n * mn;
+}
+else if (pos == 0) {
+long long x = *min_element(a.begin() + 1, a.end());
+ans = a[0] + 1LL * (n - 1) * x;
+}
+else {
+long long x = *min_element(a.begin(), a.end() - 1);
+ans = a[n - 1] + 1LL * (n - 1) * x;
+}
+
+cout << ans << '\n';
+}
+
+return 0;
+}
